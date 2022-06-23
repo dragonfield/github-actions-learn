@@ -3,6 +3,7 @@ package com.example.integration.suite;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
+import com.example.integration.DemoApplication;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.jdbc.Sql;
 
-@SpringBootTest
+@SpringBootTest(classes = DemoApplication.class)
 public class SuiteIT {
 
     @BeforeAll
