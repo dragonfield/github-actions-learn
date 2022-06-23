@@ -28,7 +28,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./sample-api
-          file: ./Dockerfile
+          file: ./sample-api/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: false
           tags: sample-api:1.0
