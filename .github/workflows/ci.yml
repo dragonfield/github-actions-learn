@@ -25,6 +25,6 @@ jobs:
         run: mvn clean test
         working-directory: ./sample-api
       - name: Integration Test
-        run: mvn clean verify
+        run: mvn clean install -Dmaven.test.skip=true
         working-directory: ./integration-test
 
