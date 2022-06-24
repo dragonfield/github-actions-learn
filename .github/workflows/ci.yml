@@ -30,9 +30,11 @@ jobs:
         run: sleep 30
       - name: Confirm docker Container
         run: docker ps -a
+      - name: Migration Database
+        run: mvn flyway:migrate
+        working-directory: ./integration-test
       - name: Integration Test
-        run: mvn clean install -Dmaven.test.skip=true
-#        run: mvn test-compile failsafe:integration-test
+        run: mvn test-compile failsafe:integration-test
         working-directory: ./integration-test
       - name: Stop docker-compose for Integration Test
         run: docker-compose -f ./docker-compose.yml down --volumes
