@@ -6,6 +6,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 
 import com.example.integration.DemoApplication;
+import com.example.integration.IntegrationTestConfig;
 import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.destination.Destination;
 import com.ninja_squad.dbsetup.destination.DriverManagerDestination;
@@ -20,17 +21,19 @@ import org.springframework.http.HttpStatus;
 @SpringBootTest(classes = DemoApplication.class)
 public class SeparateIT {
 
+    private static IntegrationTestConfig conf = new IntegrationTestConfig();
+
     @BeforeAll
     public static void setUpAll() {
-        RestAssured.baseURI = "http://localhost:8080";
+        RestAssured.baseURI = "http://" + conf.getRestAssuredHost() + ":" + conf.getRestAssuredPort();
     }
 
     @BeforeEach
     public void setUpDatabase() {
         Destination destination
-                = new DriverManagerDestination("jdbc:postgresql://localhost:5432/mydb",
-                                               "appuser",
-                                               "password123");
+                = new DriverManagerDestination(conf.getDatabaseUrl(),
+                                               conf.getDatabaseUser(),
+                                               conf.getDatabasePassword());
         Operation operations = sequenceOf(DELETE_ALL, INSERT_EMPLOYEE);
 
         DbSetup dbSetup = new DbSetup(destination, operations);
