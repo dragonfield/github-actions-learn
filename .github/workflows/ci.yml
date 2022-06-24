@@ -30,6 +30,7 @@ jobs:
         working-directory: ./integration-test
       - name: Clean Docker images
         run: docker rmi $(docker images -a -q)
+        continue-on-error: true
       - name: Confirm Docker Containers
         run: docker ps -a
       - name: Confirm Docker images
