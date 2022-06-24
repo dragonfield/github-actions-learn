@@ -1,7 +1,7 @@
 name: Continuous Integration
 on: [push]
 jobs:
-  build:
+  ci-pipeline:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,10 +30,10 @@ jobs:
         run: docker build -t sample-api:TEST .
         working-directory: ./sample-api
 
-      - name: Startup Containsers
+      - name: Startup Integration Environment
         run: docker-compose -f ./docker-compose.yml up -d
 
-      - name: Waiting for Starting Containers
+      - name: Waiting for Starting Integration Environment
         run: sleep 30
 
       - name: Migrate Database Schemas
@@ -44,7 +44,7 @@ jobs:
         run: mvn -P integration-test clean verify
         working-directory: ./integration-test
 
-      - name: Shutdown Containers
+      - name: Shutdown Integration Environment
         if: always()
         run: docker-compose -f ./docker-compose.yml down --volumes
 
