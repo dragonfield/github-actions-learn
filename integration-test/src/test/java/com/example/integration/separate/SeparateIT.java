@@ -29,8 +29,8 @@ public class SeparateIT {
     public void setUpDatabase() {
         Destination destination
                 = new DriverManagerDestination("jdbc:postgresql://localhost:5432/mydb",
-                "appuser",
-                "password123");
+                                               "appuser",
+                                               "password123");
         Operation operations = sequenceOf(DELETE_ALL, INSERT_EMPLOYEE);
 
         DbSetup dbSetup = new DbSetup(destination, operations);
