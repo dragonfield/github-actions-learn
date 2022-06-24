@@ -30,7 +30,7 @@ jobs:
         working-directory: ./integration-test
       - name: Clean Docker images
         run: docker image prune -f
+      - name: Confirm Docker Containers
+        run: docker ps -a
       - name: Confirm Docker images
-        run: |
-          docker ps -a
-          docker images
+        run: docker images
