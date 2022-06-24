@@ -37,7 +37,9 @@ jobs:
         run: mvn clean verify
         working-directory: ./integration-test
       - name: Stop docker-compose for Integration Test
+        if: always()
         run: docker-compose -f ./docker-compose.yml down --volumes
       - name: Clean Docker images
+        if: always()
         run: docker rmi sample-api:TEST
         continue-on-error: true
