@@ -25,6 +25,7 @@
         <junit-platform.version>1.8.1</junit-platform.version>
         <rest-assured.version>5.1.1</rest-assured.version>
         <postgresql.version>42.2.2</postgresql.version>
+        <DbSetup.version>2.1.0</DbSetup.version>
 
         <maven-failsafe-plugin.version>3.0.0-M5</maven-failsafe-plugin.version>
         <flyway-maven-plugin.version>8.5.9</flyway-maven-plugin.version>
@@ -101,6 +102,13 @@
             <groupId>io.rest-assured</groupId>
             <artifactId>xml-path</artifactId>
             <version>${rest-assured.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ninja-squad</groupId>
+            <artifactId>DbSetup</artifactId>
+            <version>${DbSetup.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

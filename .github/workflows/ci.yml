@@ -26,6 +26,8 @@ jobs:
         working-directory: ./sample-api
       - name: Run docker-compose for Integration Test
         run: docker-compose -f ./docker-compose.yml up -d
+      - name: Waiting for starting containers
+        run: sleep 30
       - name: Confirm docker Container
         run: docker ps -a
       - name: Integration Test

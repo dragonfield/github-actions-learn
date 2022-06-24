@@ -1,15 +1,21 @@
 package com.example.integration.suite;
 
+import static com.example.integration.TestDatum.*;
+import static com.ninja_squad.dbsetup.Operations.*;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
 import com.example.integration.DemoApplication;
+import com.ninja_squad.dbsetup.DbSetup;
+import com.ninja_squad.dbsetup.destination.Destination;
+import com.ninja_squad.dbsetup.destination.DriverManagerDestination;
+import com.ninja_squad.dbsetup.operation.Operation;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.test.context.jdbc.Sql;
 
 @SpringBootTest(classes = DemoApplication.class)
 public class SuiteIT {
@@ -19,8 +25,19 @@ public class SuiteIT {
         RestAssured.baseURI = "http://localhost:8080";
     }
 
+    @BeforeEach
+    public void setUpDatabase() {
+        Destination destination
+                = new DriverManagerDestination("jdbc:postgresql://localhost:5432/mydb",
+                                               "appuser",
+                                               "password123");
+        Operation operations = sequenceOf(DELETE_ALL, INSERT_EMPLOYEE);
+
+        DbSetup dbSetup = new DbSetup(destination, operations);
+        dbSetup.launch();
+    }
+
     @Test
-    @Sql("classpath:sql/setup_test_data.sql")
     void test_正常に従業員情報が取得できる場合() {
         given()
             .when()
