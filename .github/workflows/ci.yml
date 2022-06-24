@@ -26,10 +26,14 @@ jobs:
         working-directory: ./sample-api
       - name: Run docker-compose for Integration Test
         run: docker-compose -f ./docker-compose.yml up -d
+      - name: Confirm docker Container
+        run: docker ps -a
       - name: Integration Test
         run: mvn clean install -Dmaven.test.skip=true
 #        run: mvn test-compile failsafe:integration-test
         working-directory: ./integration-test
+      - name: Stop docker-compose for Integration Test
+        run: docker-compose -f ./docker-compose.yml rm -sf
       - name: Clean Docker images
         run: docker rmi $(docker images -a -q)
         continue-on-error: true
