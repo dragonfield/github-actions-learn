@@ -26,8 +26,10 @@ jobs:
         working-directory: ./sample-api
       - name: Confirm Docker images
         run: docker images
-        working-directory: ./sample-api
       - name: Integration Test
         run: mvn clean install -Dmaven.test.skip=true
+#        run: mvn test-compile failsafe:integration-test
         working-directory: ./integration-test
+      - name: Clean Docker images
+        run: docker image prune -f
 
