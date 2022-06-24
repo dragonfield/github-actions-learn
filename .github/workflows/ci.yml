@@ -22,7 +22,7 @@ jobs:
         run: mvn clean test
         working-directory: ./sample-api
       - name: Build Docker Container
-        run: docker built -t sample-api:TEST
+        run: docker build -t sample-api:TEST
         working-directory: ./sample-api
       - name: Confirm Docker images
         run: docker images
