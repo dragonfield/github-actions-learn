@@ -28,6 +28,8 @@ jobs:
         run: mvn clean install -Dmaven.test.skip=true
 #        run: mvn test-compile failsafe:integration-test
         working-directory: ./integration-test
+      - name: Confirm Docker images
+        run: docker images
       - name: Clean Docker images
         run: docker rmi $(docker images -a -q)
         continue-on-error: true
