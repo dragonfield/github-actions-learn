@@ -33,7 +33,7 @@ jobs:
 #        run: mvn test-compile failsafe:integration-test
         working-directory: ./integration-test
       - name: Stop docker-compose for Integration Test
-        run: docker-compose -f ./docker-compose.yml rm -sf
+        run: docker-compose -f ./docker-compose.yml down --volumes
       - name: Clean Docker images
         run: docker rmi $(docker images -a -q)
         continue-on-error: true
