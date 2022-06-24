@@ -29,7 +29,7 @@ jobs:
 #        run: mvn test-compile failsafe:integration-test
         working-directory: ./integration-test
       - name: Clean Docker images
-        run: docker image prune -f
+        run: docker rmi $(docker images -a -q)
       - name: Confirm Docker Containers
         run: docker ps -a
       - name: Confirm Docker images
