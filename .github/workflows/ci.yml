@@ -18,8 +18,8 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-      - name: Unit Test
-        run: mvn clean test
+      - name: Built and Unit Test
+        run: mvn clean install
         working-directory: ./sample-api
       - name: Build Docker Container
         run: docker build -t sample-api:TEST .
