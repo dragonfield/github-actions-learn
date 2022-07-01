@@ -23,7 +23,7 @@ class EmployeeMapperTest {
         // assert
         EmployeeEntity expected = EmployeeEntity.builder()
                                                 .id("0001")
-                                                .firstName("Taro1")
+                                                .firstName("Taro")
                                                 .lastName("Yamada")
                                                 .build();
         assertThat(actual).isEqualTo(expected);
