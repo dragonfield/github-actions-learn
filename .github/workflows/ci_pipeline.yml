@@ -30,23 +30,9 @@ jobs:
         run: docker build -t sample-api:TEST .
         working-directory: ./sample-api
 
-      - name: Startup Integration Environment
-        run: docker-compose -f ./docker-compose.yml up -d
-
-      - name: Waiting for Starting Integration Environment
-        run: sleep 30
-
-      - name: Migrate Database Schemas
-        run: mvn -P integration-test flyway:migrate
-        working-directory: ./integration-test
-
       - name: Integration Test
         run: mvn -P integration-test clean verify
         working-directory: ./integration-test
-
-      - name: Shutdown Integration Environment
-        if: always()
-        run: docker-compose -f ./docker-compose.yml down --volumes
 
       - name: Clean up Docker images
         if: always()

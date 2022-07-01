@@ -10,13 +10,20 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - postgresql
+      postgresql:
+        condition: service_healthy
     networks:
       - my-nw
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/mydb
       SPRING_DATASOURCE_USERNAME: appuser
       SPRING_DATASOURCE_PASSWORD: password123
+    healthcheck:
+      test: "curl http://localhost:8080/actuator/health/readiness || exit 1"
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   postgresql:
     image: postgres:12.7-alpine
@@ -31,6 +38,12 @@ services:
       - 5432:5432
     networks:
       - my-nw
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
 networks:
   my-nw:
