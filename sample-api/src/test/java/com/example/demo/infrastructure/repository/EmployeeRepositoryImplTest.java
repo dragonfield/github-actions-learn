@@ -4,12 +4,47 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.example.demo.domain.model.Employee;
 import java.util.Optional;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.OracleContainer;
+import org.testcontainers.delegate.DatabaseDelegate;
+import org.testcontainers.ext.ScriptUtils;
+import org.testcontainers.jdbc.JdbcDatabaseDelegate;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
 @SpringBootTest
+@Testcontainers
 class EmployeeRepositoryImplTest {
+
+    @Container
+    private static final OracleContainer oracleContainer =
+            new OracleContainer(DockerImageName.parse("gvenzl/oracle-xe").withTag("11.2.0.2"))
+                    .withDatabaseName("XE")
+                    .withUsername("appuser")
+                    .withPassword("password123");
+//                    .withInitScript("schema.sql");
+
+    @DynamicPropertySource
+    static void registerProperties(DynamicPropertyRegistry registry) {
+        // Datasource Config
+        registry.add("spring.datasource.driver-class-name", oracleContainer::getDriverClassName);
+        registry.add("spring.datasource.url", oracleContainer::getJdbcUrl);
+        registry.add("spring.datasource.username", oracleContainer::getUsername);
+        registry.add("spring.datasource.password", oracleContainer::getPassword);
+    }
+
+    @BeforeAll
+    static void setupAll() {
+        DatabaseDelegate containerDelegate = new JdbcDatabaseDelegate(oracleContainer, "");
+        ScriptUtils.runInitScript(containerDelegate, "schema.sql");
+    }
 
     @Autowired
     EmployeeRepositoryImpl target;
