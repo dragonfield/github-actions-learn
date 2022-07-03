@@ -42,6 +42,8 @@ class EmployeeMapperTest {
 
     @BeforeAll
     static void setupAll() {
+        String systemProperty = System.getProperty("oracle.jdbc.timezoneAsRegion");
+        System.out.println("============" + systemProperty + "============");
         DatabaseDelegate containerDelegate = new JdbcDatabaseDelegate(oracleContainer, "");
         ScriptUtils.runInitScript(containerDelegate, "schema.sql");
     }

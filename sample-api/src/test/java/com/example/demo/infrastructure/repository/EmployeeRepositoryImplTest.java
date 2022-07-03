@@ -38,10 +38,14 @@ class EmployeeRepositoryImplTest {
         registry.add("spring.datasource.url", oracleContainer::getJdbcUrl);
         registry.add("spring.datasource.username", oracleContainer::getUsername);
         registry.add("spring.datasource.password", oracleContainer::getPassword);
+        registry.add("logging.level.org.testcontainers", () -> "INFO");
+        registry.add("logging.level.com.github.dockerjava", () -> "WARN");
     }
 
     @BeforeAll
     static void setupAll() {
+        String systemProperty = System.getProperty("oracle.jdbc.timezoneAsRegion");
+        System.out.println("============" + systemProperty + "============");
         DatabaseDelegate containerDelegate = new JdbcDatabaseDelegate(oracleContainer, "");
         ScriptUtils.runInitScript(containerDelegate, "schema.sql");
     }
