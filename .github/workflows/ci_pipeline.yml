@@ -3,7 +3,7 @@ name: Continuous Integration
 on:
   push:
     branches:
-      - main
+      - oracle_error
 
 jobs:
   unit-test:
@@ -21,33 +21,3 @@ jobs:
       - name: Unit Test
         run: mvn clean test
         working-directory: ./sample-api
-
-  integration-test:
-    runs-on: ubuntu-latest
-    needs: unit-test
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Set up JDK
-        uses: ./.github/actions/setup-java
-        with:
-          java-version: '17'
-          java-distribution: 'corretto'
-
-      - name: Build
-        run: mvn clean install -Dmaven.test.skip=true
-        working-directory: ./sample-api
-
-      - name: Containerize Application
-        run: docker build -t sample-api:TEST .
-        working-directory: ./sample-api
-
-      - name: Integration Test
-        run: mvn -P integration-test clean verify
-        working-directory: ./integration-test
-
-      - name: Clean up Docker images
-        if: always()
-        run: docker rmi sample-api:TEST
-        continue-on-error: true
