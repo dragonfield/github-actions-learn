@@ -47,7 +47,15 @@ jobs:
         run: mvn -P integration-test clean verify
         working-directory: ./integration-test
 
+      - name: Show Docker images
+        if: always()
+        run: docker images
+
       - name: Clean up Docker images
         if: always()
         run: docker rmi sample-api:TEST
         continue-on-error: true
+
+      - name: Show Docker images
+        if: always()
+        run: docker images
