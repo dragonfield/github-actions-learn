@@ -53,7 +53,7 @@ jobs:
 
       - name: Clean up Docker images
         if: always()
-        run: docker rmi sample-api:TEST
+        run: docker-compose down --rmi all
         continue-on-error: true
 
       - name: Show Docker images
