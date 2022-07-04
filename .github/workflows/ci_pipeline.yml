@@ -19,5 +19,5 @@ jobs:
           java-distribution: 'corretto'
 
       - name: Unit Test
-        run: mvn clean test -Doracle.jdbc.timezoneAsRegion=false
+        run: mvn clean test -Duser.language=ja -Duser.country=JP -Duser.timezone=Asia/Tokyo
         working-directory: ./sample-api
