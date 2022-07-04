@@ -149,6 +149,9 @@
                         <value>30</value>
                         <unit>SECONDS</unit>
                     </wait>
+                    <forceBuild>true</forceBuild>
+                    <removeVolumes>true</removeVolumes>
+                    <removeOrphans>true</removeOrphans>
                 </configuration>
                 <executions>
                     <execution>
