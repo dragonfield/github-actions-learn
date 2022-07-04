@@ -35,6 +35,9 @@ jobs:
           java-version: '17'
           java-distribution: 'corretto'
 
+      - name: Check
+        run: date
+
       - name: Build
         run: mvn clean install -Dmaven.test.skip=true
         working-directory: ./sample-api
@@ -45,7 +48,5 @@ jobs:
 
       - name: Clean up Docker images
         if: always()
-        run: |
-          docker images
-          docker volume ls
+        run: docker-compose down --rmi all --volumes
         continue-on-error: true
