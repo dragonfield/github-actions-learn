@@ -47,5 +47,5 @@ jobs:
         if: always()
         run: |
           docker images
-          docker volumes ls
+          docker volume ls
         continue-on-error: true
