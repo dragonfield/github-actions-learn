@@ -44,8 +44,12 @@ class EmployeeRepositoryImplTest {
 
     @BeforeAll
     static void setupAll() {
-        String systemProperty = System.getProperty("oracle.jdbc.timezoneAsRegion");
-        System.out.println("============" + systemProperty + "============");
+        System.out.println("=========================================================================");
+        System.out.println("user.language = " + System.getProperty("user.language"));
+        System.out.println("user.country = " + System.getProperty("user.country"));
+        System.out.println("user.timezone = " + System.getProperty("user.timezone"));
+        System.out.println("oracle.jdbc.timezoneAsRegion = " + System.getProperty("oracle.jdbc.timezoneAsRegion"));
+        System.out.println("=========================================================================");
         DatabaseDelegate containerDelegate = new JdbcDatabaseDelegate(oracleContainer, "");
         ScriptUtils.runInitScript(containerDelegate, "schema.sql");
     }
