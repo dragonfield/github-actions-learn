@@ -39,15 +39,13 @@ jobs:
         run: mvn clean install -Dmaven.test.skip=true
         working-directory: ./sample-api
 
-      - name: Containerize Application
-        run: docker build -t sample-api:TEST .
-        working-directory: ./sample-api
-
       - name: Integration Test
         run: mvn -P integration-test clean verify
         working-directory: ./integration-test
 
       - name: Clean up Docker images
         if: always()
-        run: docker-compose down --rmi all --volumes
+        run: |
+          docker images
+          docker volumes ls
         continue-on-error: true
