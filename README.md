@@ -1,2 +1,2 @@
 # github-actions-learn
-check
+auto-merge test
