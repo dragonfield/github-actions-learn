@@ -49,7 +49,7 @@ public class SuiteIT {
             .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("id", equalTo("0001"))
-                .body("firstName", equalTo("Jiro"))
+                .body("firstName", equalTo("Taro"))
                 .body("lastName", equalTo("Yamada"));
     }
 
